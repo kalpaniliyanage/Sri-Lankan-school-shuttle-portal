@@ -1,0 +1,24 @@
+{
+    "name": "School Shuttle Assistant",
+    "short_name": "Shuttle Assistant",
+    "description": "A modern school transport and shuttle management assistant app.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/app_logo.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/app_logo.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "any"
+        }
+    ]
+}

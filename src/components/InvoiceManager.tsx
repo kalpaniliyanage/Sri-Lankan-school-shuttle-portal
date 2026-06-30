@@ -395,9 +395,9 @@ export default function InvoiceManager({
                                 <div className="border-2 border-slate-800 p-6 space-y-6">
                                     {/* Receipt Header */}
                                     <div className="text-center space-y-1.5 pb-4 border-b-2 border-dashed border-slate-300">
-                                        <h2 className="text-xl font-extrabold uppercase tracking-tight text-slate-950">School Transport Authority</h2>
-                                        <p className="text-xs font-semibold text-slate-500">Official Student Passenger Safety Portal</p>
-                                        <p className="text-[10px] text-slate-400 font-mono">Colombo, Western Province • Tel: +94 11 234 5678 • support@transport.edu</p>
+                                        <h2 className="text-xl font-extrabold uppercase tracking-tight text-slate-950">School Shuttle Assistant</h2>
+                                        <p className="text-xs font-semibold text-slate-500">Student Passenger Log & Payment Receipt</p>
+                                        <p className="text-[10px] text-slate-400 font-mono">Personal Project Management System • Colombo, Sri Lanka</p>
                                     </div>
 
                                     {/* Metadata Row */}

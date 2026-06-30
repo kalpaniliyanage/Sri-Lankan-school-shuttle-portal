@@ -62,8 +62,8 @@ export default function Login({ onLoginSuccess }: LoginProps) {
                             <img src={appLogo} alt="App Logo" className="w-10 h-10 object-cover rounded-lg" referrerPolicy="no-referrer" />
                         </div>
                         <div>
-                            <span className="text-white font-extrabold text-base tracking-tight block">School Transport Authority</span>
-                            <span className="text-[10px] text-amber-400 font-bold font-mono tracking-wider uppercase block">SQLite Desktop C# WPF Client</span>
+                            <span className="text-white font-extrabold text-base tracking-tight block">School Shuttle Assistant</span>
+                            <span className="text-[10px] text-amber-400 font-bold font-mono tracking-wider uppercase block">React & Vite Management Client</span>
                         </div>
                     </div>
 
