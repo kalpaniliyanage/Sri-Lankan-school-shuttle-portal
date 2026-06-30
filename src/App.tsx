@@ -24,6 +24,8 @@ import InvoiceManager from './components/InvoiceManager';
 import ReportsCenter from './components/ReportsCenter';
 import SqlPlayground from './components/SqlPlayground';
 import Login from './components/Login';
+// @ts-ignore
+import appLogo from './assets/images/app_logo_1782819908730.jpg';
 
 export default function App() {
   const [dbState, setDbState] = useState<DatabaseState>(getInitialState);
@@ -274,8 +276,8 @@ export default function App() {
       {/* Visual Top Branding Bar */}
       <header className="bg-slate-900 border-b border-slate-800/80 px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shrink-0 shadow-xl no-print">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 p-2.5 rounded-xl font-bold shadow-md shadow-amber-400/15">
-            <Bus className="w-5 h-5 animate-pulse" />
+          <div className="p-0.5 bg-slate-950 border border-slate-800 rounded-xl shadow-md overflow-hidden shrink-0">
+            <img src={appLogo} alt="App Logo" className="w-9 h-9 object-cover rounded-lg" referrerPolicy="no-referrer" />
           </div>
           <div>
             <h1 className="text-base font-extrabold text-white tracking-tight flex items-center gap-2">
