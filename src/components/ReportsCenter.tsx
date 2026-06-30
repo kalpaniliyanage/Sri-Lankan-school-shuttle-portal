@@ -5,7 +5,9 @@
 
 import React, { useState } from 'react';
 import { Invoice, Student, Vehicle, Payment } from '../types';
-import { FileSpreadsheet, Printer, TrendingUp, Users, AlertCircle, Coins, Search, Sparkles } from 'lucide-react';
+import { FileSpreadsheet, Printer, TrendingUp, Users, AlertCircle, Coins, Search, Sparkles, Download } from 'lucide-react';
+import { downloadReportPdf } from '../utils/pdfGenerator';
+import { playTap, playSuccess } from '../utils/audio';
 
 interface ReportsCenterProps {
     invoices: Invoice[];
@@ -130,6 +132,20 @@ export default function ReportsCenter({ invoices, students, vehicles }: ReportsC
         window.print();
     };
 
+    const handleDownloadPdf = () => {
+        playTap();
+        let dataToExport: any[] = [];
+        if (reportType === 'defaulters') {
+            dataToExport = defaultersData;
+        } else if (reportType === 'route_revenue') {
+            dataToExport = routeRevenueData;
+        } else {
+            dataToExport = schoolTotalsData;
+        }
+        downloadReportPdf(reportType, selectedMonth, selectedYear, dataToExport);
+        playSuccess();
+    };
+
     return (
         <div className="bg-slate-900 border border-slate-800/80 rounded-2xl shadow-xl p-6" id="reports-center-card">
             {/* Header */}
@@ -150,6 +166,13 @@ export default function ReportsCenter({ invoices, students, vehicles }: ReportsC
                         className="inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs cursor-pointer transition-all active:scale-[0.98] shadow-md shadow-emerald-500/5"
                     >
                         <FileSpreadsheet className="w-4 h-4" /> Export Ledger CSV
+                    </button>
+                    <button
+                        onClick={handleDownloadPdf}
+                        id="btn-download-pdf-report"
+                        className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-extrabold px-3.5 py-2 rounded-xl text-xs cursor-pointer transition-all active:scale-[0.98] shadow-md shadow-amber-500/5"
+                    >
+                        <Download className="w-4 h-4" /> Download PDF Report
                     </button>
                     <button
                         onClick={handlePrint}
