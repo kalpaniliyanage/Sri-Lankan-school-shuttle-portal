@@ -1,0 +1,6 @@
+{
+  "name": "School Transport Management System",
+  "description": "A comprehensive dashboard and management portal for tracking school transport students, drivers, conductors, vehicles, routes, invoices, and payments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
