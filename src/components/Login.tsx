@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { Bus, KeyRound, ShieldCheck, ArrowRight, Sparkles, Terminal, Eye, EyeOff, Lock } from 'lucide-react';
+import { playTap, playSuccess, playWarning } from '../utils/audio';
 // @ts-ignore
 import appLogo from '../assets/images/app_logo_1782819908730.jpg';
 
@@ -22,8 +23,10 @@ export default function Login({ onLoginSuccess }: LoginProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        playTap();
 
         if (!username || !password) {
+            playWarning();
             setError('Please provide valid login credentials.');
             return;
         }
@@ -32,8 +35,10 @@ export default function Login({ onLoginSuccess }: LoginProps) {
         // Simulate high-speed secure database query response
         setTimeout(() => {
             if (username.toLowerCase() === 'admin' && password === 'admin123') {
+                playSuccess();
                 onLoginSuccess(username);
             } else {
+                playWarning();
                 setError('Security Access Denied: Invalid username or signature keys.');
             }
             setIsLoading(false);
@@ -183,5 +188,4 @@ export default function Login({ onLoginSuccess }: LoginProps) {
 
             </div>
         </div>
-    );
-}
+    ä

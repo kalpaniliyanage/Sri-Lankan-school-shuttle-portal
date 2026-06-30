@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShieldCheck, Server, KeyRound, Check, ArrowRight, Play } from 'lucide-react';
+import { ShieldCheck, Server, KeyRound, Check, ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { playBoot, playTick, playTap, isSoundEnabled, setSoundEnabled } from '../utils/audio';
 // @ts-ignore
 import appLogo from '../assets/images/app_logo_1782819908730.jpg';
 // @ts-ignore
@@ -20,6 +21,16 @@ const loadingSteps = [
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [progress, setProgress] = useState(0);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [soundOn, setSoundOn] = useState(isSoundEnabled());
+
+  const toggleSound = () => {
+    const nextSoundState = !soundOn;
+    setSoundEnabled(nextSoundState);
+    setSoundOn(nextSoundState);
+    if (nextSoundState) {
+      setTimeout(() => playTap(), 50);
+    }
+  };
 
   useEffect(() => {
     // Fast automatic load: 1.5 seconds splash duration
@@ -28,6 +39,9 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     const stepsCount = loadingSteps.length;
     const totalTicks = duration / intervalTime;
     let tick = 0;
+
+    // Play a subtle boot or startup chime initially
+    playBoot();
 
     const timer = setInterval(() => {
       tick += 1;
@@ -39,13 +53,17 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         Math.floor((currentProgress / 100) * stepsCount),
         stepsCount - 1
       );
+      
+      // Play tick sound whenever progress crosses step boundaries
       if (nextStepIndex !== currentStepIndex) {
         setCurrentStepIndex(nextStepIndex);
+        playTick();
       }
 
       if (tick >= totalTicks) {
         clearInterval(timer);
-        // Slightly delayed automatic trigger for natural feeling
+        // Play final completion boot chime
+        playBoot();
         const timeout = setTimeout(() => {
           onComplete();
         }, 300);
@@ -54,9 +72,14 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, [onComplete, currentStepIndex]);
+  }, [onComplete]);
 
   const CurrentStepIcon = loadingSteps[currentStepIndex].icon;
+
+  const handleEnterNow = () => {
+    playTap();
+    onComplete();
+  };
 
   return (
     <div className="fixed inset-0 bg-slate-950 flex items-center justify-center overflow-hidden z-50 select-none">
@@ -104,10 +127,23 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         </div>
 
         {/* Right Side: Interactive Branding & Fast Boot Controls */}
-        <div className="md:col-span-7 p-8 md:p-12 flex flex-col justify-between min-h-[420px] md:min-h-[480px]">
+        <div className="md:col-span-7 p-8 md:p-12 flex flex-col justify-between min-h-[420px] md:min-h-[480px] relative">
+          
+          {/* Sound Toggle Button */}
+          <button
+            onClick={toggleSound}
+            className="absolute top-6 right-6 p-2 rounded-xl bg-slate-950/40 border border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/60 transition-all cursor-pointer text-slate-400 hover:text-amber-400 active:scale-95"
+            title={soundOn ? "Mute audio effects" : "Unmute audio effects"}
+          >
+            {soundOn ? (
+              <Volume2 className="w-4 h-4 text-amber-400 animate-pulse" />
+            ) : (
+              <VolumeX className="w-4 h-4 text-slate-500" />
+            )}
+          </button>
           
           {/* Logo, Title and Badges */}
-          <div className="flex items-start gap-4 text-left">
+          <div className="flex items-start gap-4 text-left pr-8">
             {/* Logo Container */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -191,7 +227,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
             {/* "Quick Go to Login" Interactive Trigger */}
             <button
-              onClick={onComplete}
+              onClick={handleEnterNow}
               className="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-extrabold text-xs px-5 py-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-amber-500/10 active:scale-[0.98]"
             >
               <span>Enter Portal Now</span>
