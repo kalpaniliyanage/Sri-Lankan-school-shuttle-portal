@@ -71,4 +71,4 @@ The output will be in the `dist/` folder, ready to deploy to any static hosting 
 
 ## 📄 License
 
-Add your preferred license here (MIT, etc.) if you plan to make this public.
+This project is licensed under the MIT License.
